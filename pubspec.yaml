@@ -31,6 +31,7 @@ dependencies:
   shared_preferences:
   fluttertoast:
   firebase_database:
+  image_picker:
 
 dev_dependencies:
   flutter_test:
