@@ -181,12 +181,6 @@ class _AddProductState extends State<AddProduct> {
                   onChanged: changeSelectedCategory,
                   value: _currentCategory,
                 ),
-              ],
-            ),
-
-// * Seclect the Brand
-            Row(
-              children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -199,6 +193,114 @@ class _AddProductState extends State<AddProduct> {
                   onChanged: changeSelectedCategory,
                   value: _currentBrand,
                 ),
+              ],
+            ),
+// * Set The Quantity
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: TextFormField(
+                controller: productNameController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(hintText: 'Quantity'),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please input the size';
+                  }
+                },
+              ),
+            ),
+// * Choose the Size
+            Row(
+              children: <Widget>[
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('XS'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('S'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('M'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('L'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('XL'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('XXL'),
+              ],
+            ),
+// * Choose the Size
+            Row(
+              children: <Widget>[
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('28'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('30'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('32'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('34'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('36'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('38'),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('40'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('42'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('44'),
+                Checkbox(
+                  value: false,
+                  onChanged: null,
+                ),
+                Text('46'),
               ],
             ),
             FlatButton(
