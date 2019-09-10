@@ -32,6 +32,8 @@ dependencies:
   fluttertoast:
   firebase_database:
   image_picker:
+  flutter_typeahead:
+  flutter_search_panel:
 
 dev_dependencies:
   flutter_test:
