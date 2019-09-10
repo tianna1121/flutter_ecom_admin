@@ -25,9 +25,9 @@ class _AddProductState extends State<AddProduct> {
 
   @override
   void initState() {
-    //   super.initState();
+    super.initState();
     _getCategories();
-    //_getBrands();
+    _getBrands();
     //_currentCategory = categoriesDropDown[0].value;
   }
 
@@ -45,6 +45,22 @@ class _AddProductState extends State<AddProduct> {
       });
     }
     print('getCategoriesDropDown(): categories = ' + items.length.toString());
+    return items;
+  }
+
+  List<DropdownMenuItem<String>> getBrandsDropDown() {
+    List<DropdownMenuItem<String>> items = new List();
+
+    for (int i = 0; i < brands.length; i++) {
+      setState(() {
+        items.insert(
+            0,
+            DropdownMenuItem(
+              child: Text(brands[i].data['brand']),
+              value: brands[i].data['brand'],
+            ));
+      });
+    }
     return items;
   }
 
@@ -151,15 +167,44 @@ class _AddProductState extends State<AddProduct> {
               ),
             ),
             // * Select Category
-            DropdownButton(
-              items: categoriesDropDown,
-              onChanged: changeSelectedCategory,
-              value: _currentCategory,
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Category',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+                DropdownButton(
+                  items: categoriesDropDown,
+                  onChanged: changeSelectedCategory,
+                  value: _currentCategory,
+                ),
+              ],
+            ),
+
+// * Seclect the Brand
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Brand',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+                DropdownButton(
+                  items: brandsDropDown,
+                  onChanged: changeSelectedCategory,
+                  value: _currentBrand,
+                ),
+              ],
             ),
             FlatButton(
               color: Colors.red,
               textColor: Colors.white,
-              child: Text('add product'),
+              child: Text('add brand'),
               onPressed: () {},
             )
           ],
@@ -181,6 +226,22 @@ class _AddProductState extends State<AddProduct> {
   changeSelectedCategory(String selectedCategory) {
     setState(() {
       _currentCategory = selectedCategory;
+    });
+  }
+
+  void _getBrands() async {
+    List<DocumentSnapshot> data = await _brandService.getBrands();
+    //print(data.length);
+    setState(() {
+      brands = data;
+      brandsDropDown = getBrandsDropDown();
+      _currentBrand = brands[0].data['brand'];
+    });
+  }
+
+  changeSelectedBrand(String selectedBrand) {
+    setState(() {
+      _currentBrand = selectedBrand;
     });
   }
 }
