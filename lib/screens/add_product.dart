@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecom_admin/db/brand.dart';
@@ -23,6 +25,9 @@ class _AddProductState extends State<AddProduct> {
   CategoryService _categoryService = CategoryService();
   BrandService _brandService = BrandService();
   List<String> selectedSizes = <String>[];
+  File _image1;
+  File _image2;
+  File _image3;
 
   @override
   void initState() {
@@ -90,54 +95,45 @@ class _AddProductState extends State<AddProduct> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: OutlineButton(
-                      borderSide:
-                          BorderSide(color: Colors.grey.withOpacity(0.8)),
-                      onPressed: () {},
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(14.0, 70.0, 14.0, 70.0),
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
+                        borderSide:
+                            BorderSide(color: Colors.grey.withOpacity(0.8)),
+                        onPressed: () {
+                          _selecteImage(
+                              ImagePicker.pickImage(
+                                  source: ImageSource.gallery),
+                              1);
+                        },
+                        child: _displayChild1()),
                   ),
                 ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: OutlineButton(
-                      borderSide:
-                          BorderSide(color: Colors.grey.withOpacity(0.8)),
-                      onPressed: () {},
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(14.0, 70.0, 14.0, 70.0),
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
+                        borderSide:
+                            BorderSide(color: Colors.grey.withOpacity(0.8)),
+                        onPressed: () {
+                          _selecteImage(
+                              ImagePicker.pickImage(
+                                  source: ImageSource.gallery),
+                              2);
+                        },
+                        child: _displayChild2()),
                   ),
                 ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: OutlineButton(
-                      borderSide:
-                          BorderSide(color: Colors.grey.withOpacity(0.8)),
-                      onPressed: () {},
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(14.0, 70.0, 14.0, 70.0),
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
+                        borderSide:
+                            BorderSide(color: Colors.grey.withOpacity(0.8)),
+                        onPressed: () {
+                          _selecteImage(
+                              ImagePicker.pickImage(
+                                  source: ImageSource.gallery),
+                              3);
+                        },
+                        child: _displayChild3()),
                   ),
                 ),
               ],
@@ -219,28 +215,28 @@ class _AddProductState extends State<AddProduct> {
                 ),
                 Text('XS'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('S'),
+                  onChanged: (value) => changeSelectedSize('S'),
                 ),
                 Text('S'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('M'),
+                  onChanged: (value) => changeSelectedSize('M'),
                 ),
                 Text('M'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('L'),
+                  onChanged: (value) => changeSelectedSize('L'),
                 ),
                 Text('L'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('XL'),
+                  onChanged: (value) => changeSelectedSize('XL'),
                 ),
                 Text('XL'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('XXL'),
+                  onChanged: (value) => changeSelectedSize('XXL'),
                 ),
                 Text('XXL'),
               ],
@@ -249,33 +245,33 @@ class _AddProductState extends State<AddProduct> {
             Row(
               children: <Widget>[
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('28'),
+                  onChanged: (value) => changeSelectedSize('28'),
                 ),
                 Text('28'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('30'),
+                  onChanged: (value) => changeSelectedSize('30'),
                 ),
                 Text('30'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('32'),
+                  onChanged: (value) => changeSelectedSize('32'),
                 ),
                 Text('32'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('34'),
+                  onChanged: (value) => changeSelectedSize('34'),
                 ),
                 Text('34'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('36'),
+                  onChanged: (value) => changeSelectedSize('36'),
                 ),
                 Text('36'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('38'),
+                  onChanged: (value) => changeSelectedSize('38'),
                 ),
                 Text('38'),
               ],
@@ -283,25 +279,35 @@ class _AddProductState extends State<AddProduct> {
             Row(
               children: <Widget>[
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('40'),
+                  onChanged: (value) => changeSelectedSize('40'),
                 ),
                 Text('40'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('42'),
+                  onChanged: (value) => changeSelectedSize('42'),
                 ),
                 Text('42'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('44'),
+                  onChanged: (value) => changeSelectedSize('44'),
                 ),
                 Text('44'),
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('46'),
+                  onChanged: (value) => changeSelectedSize('46'),
                 ),
                 Text('46'),
+                Checkbox(
+                  value: selectedSizes.contains('48'),
+                  onChanged: (value) => changeSelectedSize('48'),
+                ),
+                Text('48'),
+                Checkbox(
+                  value: selectedSizes.contains('50'),
+                  onChanged: (value) => changeSelectedSize('50'),
+                ),
+                Text('50'),
               ],
             ),
             FlatButton(
@@ -357,6 +363,81 @@ class _AddProductState extends State<AddProduct> {
       setState(() {
         selectedSizes.add(size);
       });
+    }
+  }
+
+  void _selecteImage(Future<File> pickImage, int imageNumber) async {
+    File tempImg = await pickImage;
+    switch (imageNumber) {
+      case 1:
+        setState(() {
+          _image1 = tempImg;
+        });
+        break;
+      case 2:
+        setState(() {
+          _image2 = tempImg;
+        });
+        break;
+      case 3:
+        setState(() {
+          _image3 = tempImg;
+        });
+        break;
+    }
+  }
+
+  Widget _displayChild1() {
+    if (_image1 == null) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(14, 70, 14, 70),
+        child: Icon(
+          Icons.add,
+          color: Colors.grey,
+        ),
+      );
+    } else {
+      return Image.file(
+        _image1,
+        fit: BoxFit.fill,
+        width: double.infinity,
+      );
+    }
+  }
+
+  Widget _displayChild2() {
+    if (_image2 == null) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(14, 70, 14, 70),
+        child: Icon(
+          Icons.add,
+          color: Colors.grey,
+        ),
+      );
+    } else {
+      return Image.file(
+        _image2,
+        fit: BoxFit.fill,
+        width: double.infinity,
+      );
+    }
+  }
+
+  Widget _displayChild3() {
+    if (_image3 == null) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(14, 70, 14, 70),
+        child: Icon(
+          Icons.add,
+          color: Colors.grey,
+        ),
+      );
+    } else {
+      return Image.file(
+        _image3,
+        fit: BoxFit.fill,
+        width: double.infinity,
+      );
     }
   }
 }
