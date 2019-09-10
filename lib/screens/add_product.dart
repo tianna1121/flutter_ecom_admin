@@ -28,24 +28,24 @@ class _AddProductState extends State<AddProduct> {
     //   super.initState();
     _getCategories();
     //_getBrands();
-    categoriesDropDown = getCategoriesDropDown();
     //_currentCategory = categoriesDropDown[0].value;
   }
 
-  getCategoriesDropDown() {
+  List<DropdownMenuItem<String>> getCategoriesDropDown() {
     List<DropdownMenuItem<String>> items = new List();
 
     for (int i = 0; i < categories.length; i++) {
       setState(() {
-        categoriesDropDown.insert(
+        items.insert(
             0,
             DropdownMenuItem(
-              child: Text(categories[i]['category']),
-              value: categories[i]['category'],
+              child: Text(categories[i].data['category']),
+              value: categories[i].data['category'],
             ));
       });
     }
     print('getCategoriesDropDown(): categories = ' + items.length.toString());
+    return items;
   }
 
   @override
@@ -150,124 +150,18 @@ class _AddProductState extends State<AddProduct> {
                 },
               ),
             ),
-            Visibility(
-              visible: _currentCategory != null || _currentCategory == '',
-              // child: Text(
-              //   _currentCategory ?? 'null',
-              //   style: TextStyle(color: Colors.red),
-              // ),
-              child: InkWell(
-                child: Material(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            _currentCategory ?? 'null',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.close),
-                          color: Colors.white,
-                          onPressed: () {},
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+            // * Select Category
+            DropdownButton(
+              items: categoriesDropDown,
+              onChanged: changeSelectedCategory,
+              value: _currentCategory,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TypeAheadField(
-                textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: false,
-                  decoration: InputDecoration(hintText: 'Add category'),
-                  style: DefaultTextStyle.of(context)
-                      .style
-                      .copyWith(fontStyle: FontStyle.normal, fontSize: 20.0),
-                  //decoration: InputDecoration(border: OutlineInputBorder()),
-                ),
-                suggestionsCallback: (pattern) async {
-                  return await _categoryService.getSuggestions(pattern);
-                },
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    leading: Icon(Icons.category),
-                    title: Text(suggestion['category']),
-                  );
-                },
-                onSuggestionSelected: (suggestion) {
-                  setState(() {
-                    _currentCategory = suggestion['category'];
-                  });
-                },
-              ),
-            ),
-
-// * for add Bands
-            Visibility(
-              visible: _currentBrand != null || _currentBrand == '',
-              // child: Text(
-              //   _currentBrand ?? 'null',
-              //   style: TextStyle(color: Colors.red),
-              // ),
-              child: InkWell(
-                child: Material(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            _currentBrand ?? 'null',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.close),
-                          color: Colors.white,
-                          onPressed: () {},
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TypeAheadField(
-                textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: false,
-                  decoration: InputDecoration(hintText: 'Add Bands'),
-                  style: DefaultTextStyle.of(context)
-                      .style
-                      .copyWith(fontStyle: FontStyle.normal, fontSize: 20.0),
-                  //decoration: InputDecoration(border: OutlineInputBorder()),
-                ),
-                suggestionsCallback: (pattern) async {
-                  return await _brandService.getSuggestions(pattern);
-                },
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    leading: Icon(Icons.category),
-                    title: Text(suggestion['bands']),
-                  );
-                },
-                onSuggestionSelected: (suggestion) {
-                  setState(() {
-                    _currentCategory = suggestion['bands'];
-                  });
-                },
-              ),
-            ),
+            FlatButton(
+              color: Colors.red,
+              textColor: Colors.white,
+              child: Text('add product'),
+              onPressed: () {},
+            )
           ],
         ),
       ),
@@ -279,7 +173,8 @@ class _AddProductState extends State<AddProduct> {
     print(data.length);
     setState(() {
       categories = data;
-      print('_getCategories(): categories = ' + categories.length.toString());
+      categoriesDropDown = getCategoriesDropDown();
+      _currentCategory = categories[0].data['category'];
     });
   }
 
