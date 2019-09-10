@@ -22,6 +22,7 @@ class _AddProductState extends State<AddProduct> {
   String _currentBrand;
   CategoryService _categoryService = CategoryService();
   BrandService _brandService = BrandService();
+  List<String> selectedSizes = <String>[];
 
   @override
   void initState() {
@@ -213,8 +214,8 @@ class _AddProductState extends State<AddProduct> {
             Row(
               children: <Widget>[
                 Checkbox(
-                  value: false,
-                  onChanged: null,
+                  value: selectedSizes.contains('XS'),
+                  onChanged: (value) => changeSelectedSize('XS'),
                 ),
                 Text('XS'),
                 Checkbox(
@@ -244,7 +245,7 @@ class _AddProductState extends State<AddProduct> {
                 Text('XXL'),
               ],
             ),
-// * Choose the Size
+            // * Choose the Size
             Row(
               children: <Widget>[
                 Checkbox(
@@ -345,5 +346,17 @@ class _AddProductState extends State<AddProduct> {
     setState(() {
       _currentBrand = selectedBrand;
     });
+  }
+
+  void changeSelectedSize(String size) {
+    if (selectedSizes.contains(size)) {
+      setState(() {
+        selectedSizes.remove(size);
+      });
+    } else {
+      setState(() {
+        selectedSizes.add(size);
+      });
+    }
   }
 }
