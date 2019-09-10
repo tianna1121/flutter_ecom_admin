@@ -78,7 +78,7 @@ class _AddProductState extends State<AddProduct> {
                       onPressed: () {},
                       child: Padding(
                         padding:
-                            const EdgeInsets.fromLTRB(14.0, 40.0, 14.0, 40.0),
+                            const EdgeInsets.fromLTRB(14.0, 70.0, 14.0, 70.0),
                         child: Icon(
                           Icons.add,
                           color: Colors.grey,
@@ -96,7 +96,7 @@ class _AddProductState extends State<AddProduct> {
                       onPressed: () {},
                       child: Padding(
                         padding:
-                            const EdgeInsets.fromLTRB(14.0, 40.0, 14.0, 40.0),
+                            const EdgeInsets.fromLTRB(14.0, 70.0, 14.0, 70.0),
                         child: Icon(
                           Icons.add,
                           color: Colors.grey,
@@ -114,7 +114,7 @@ class _AddProductState extends State<AddProduct> {
                       onPressed: () {},
                       child: Padding(
                         padding:
-                            const EdgeInsets.fromLTRB(14.0, 40.0, 14.0, 40.0),
+                            const EdgeInsets.fromLTRB(14.0, 70.0, 14.0, 70.0),
                         child: Icon(
                           Icons.add,
                           color: Colors.grey,
@@ -151,17 +151,42 @@ class _AddProductState extends State<AddProduct> {
               ),
             ),
             Visibility(
-                visible: _currentCategory != null || _currentCategory == '',
-                child: Text(
-                  _currentCategory ?? 'null',
-                  style: TextStyle(color: Colors.red),
-                )),
+              visible: _currentCategory != null || _currentCategory == '',
+              // child: Text(
+              //   _currentCategory ?? 'null',
+              //   style: TextStyle(color: Colors.red),
+              // ),
+              child: InkWell(
+                child: Material(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            _currentCategory ?? 'null',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.close),
+                          color: Colors.white,
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TypeAheadField(
                 textFieldConfiguration: TextFieldConfiguration(
                   autofocus: false,
-                  //decoration: InputDecoration(hintText: 'Add category'),
+                  decoration: InputDecoration(hintText: 'Add category'),
                   style: DefaultTextStyle.of(context)
                       .style
                       .copyWith(fontStyle: FontStyle.normal, fontSize: 20.0),
@@ -177,9 +202,69 @@ class _AddProductState extends State<AddProduct> {
                   );
                 },
                 onSuggestionSelected: (suggestion) {
-                  // setState(() {
-                  //   _currentCategory = suggestion;
-                  // });
+                  setState(() {
+                    _currentCategory = suggestion['category'];
+                  });
+                },
+              ),
+            ),
+
+// * for add Bands
+            Visibility(
+              visible: _currentBrand != null || _currentBrand == '',
+              // child: Text(
+              //   _currentBrand ?? 'null',
+              //   style: TextStyle(color: Colors.red),
+              // ),
+              child: InkWell(
+                child: Material(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            _currentBrand ?? 'null',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.close),
+                          color: Colors.white,
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TypeAheadField(
+                textFieldConfiguration: TextFieldConfiguration(
+                  autofocus: false,
+                  decoration: InputDecoration(hintText: 'Add Bands'),
+                  style: DefaultTextStyle.of(context)
+                      .style
+                      .copyWith(fontStyle: FontStyle.normal, fontSize: 20.0),
+                  //decoration: InputDecoration(border: OutlineInputBorder()),
+                ),
+                suggestionsCallback: (pattern) async {
+                  return await _brandService.getSuggestions(pattern);
+                },
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    leading: Icon(Icons.category),
+                    title: Text(suggestion['bands']),
+                  );
+                },
+                onSuggestionSelected: (suggestion) {
+                  setState(() {
+                    _currentCategory = suggestion['bands'];
+                  });
                 },
               ),
             ),

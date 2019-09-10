@@ -13,19 +13,16 @@ class BrandService {
     _firestore.collection('brands').document(brandId).setData({'brand': name});
   }
 
-  Future<List<DocumentSnapshot>> getBrands() async {
-    return _firestore.collection(ref).getDocuments().then((snaps) {
-      return snaps.documents;
-    });
-  }
+  Future<List<DocumentSnapshot>> getBrands() =>
+      _firestore.collection(ref).getDocuments().then((snaps) {
+        return snaps.documents;
+      });
 
-  Future<List<DocumentSnapshot>> getSuggestions(String suggestion) async {
-    await _firestore
-        .collection(ref)
-        .where('category', isEqualTo: suggestion)
-        .getDocuments()
-        .then((snap) {
-      return snap.documents;
-    });
-  }
+  Future<List<DocumentSnapshot>> getSuggestions(String suggestion) => _firestore
+          .collection(ref)
+          .where('brands', isEqualTo: suggestion)
+          .getDocuments()
+          .then((snaps) {
+        return snaps.documents;
+      });
 }
